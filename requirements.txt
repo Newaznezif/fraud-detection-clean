@@ -1,0 +1,29 @@
+# Data processing and manipulation
+pandas
+numpy
+
+# Visualization
+matplotlib
+seaborn
+plotly
+
+# Machine Learning
+scikit-learn
+xgboost
+lightgbm
+imbalanced-learn
+
+# Model Explainability
+shap
+
+# Jupyter notebooks
+notebook
+ipython
+
+# Utilities
+python-dateutil
+tqdm
+requests
+
+# Optional: for environment reproducibility
+joblib
