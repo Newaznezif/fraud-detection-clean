@@ -1,0 +1,26 @@
+# Python
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+*.pyc
+
+# Jupyter Notebooks checkpoints
+.ipynb_checkpoints/
+
+# VSCode settings
+.vscode/
+
+# Data files (ignore large CSVs or raw data you don't want on GitHub)
+data/creditcard/creditcard.csv
+data/processed/
+data/raw/Fraud_Data.csv
+data/raw/IpAddress_to_Country.csv
+
+# Logs and temp files
+*.log
+*.tmp
+*.bak
+
+# Git LFS pointer files (if you use LFS later)
+*.lock
