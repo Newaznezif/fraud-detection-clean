@@ -11,6 +11,11 @@ __pycache__/
 # VSCode settings
 .vscode/
 
+data/creditcard/
+data/processed/
+data/raw/
+
+
 # Data files (ignore large CSVs or raw data you don't want on GitHub)
 data/creditcard/creditcard.csv
 data/processed/
