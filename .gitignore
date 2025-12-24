@@ -1,4 +1,4 @@
-<<<<<<< Updated upstream
+
 # Python
 __pycache__/
 *.py[cod]
@@ -34,4 +34,4 @@ data/raw/IpAddress_to_Country.csv
 data/creditcard/
 data/processed/
 data/raw/
->>>>>>> Stashed changes
+
