@@ -1,4 +1,7 @@
+<<<<<<< HEAD
 
+=======
+>>>>>>> task2-model-building
 # Python
 __pycache__/
 *.py[cod]
@@ -17,9 +20,16 @@ data/processed/
 data/raw/
 
 
+
 # Data files (ignore large CSVs or raw data you don't want on GitHub)
 data/creditcard/creditcard.csv
 data/processed/
+=======
+# Data files (ignore large CSVs or raw data you don't want on GitHub)
+
+data/processed/
+data/raw/creditcard.csv
+>>>>>>> task2-model-building
 data/raw/Fraud_Data.csv
 data/raw/IpAddress_to_Country.csv
 
@@ -31,7 +41,11 @@ data/raw/IpAddress_to_Country.csv
 # Git LFS pointer files (if you use LFS later)
 *.lock
 =======
+
 data/creditcard/
+=======
+
+
 data/processed/
 data/raw/
 
