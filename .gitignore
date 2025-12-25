@@ -1,5 +1,8 @@
 <<<<<<< HEAD
+<<<<<<< HEAD
 
+=======
+>>>>>>> task2-model-building
 =======
 >>>>>>> task2-model-building
 # Python
@@ -19,16 +22,22 @@ data/creditcard/
 data/processed/
 data/raw/
 
+<<<<<<< HEAD
 
 
 # Data files (ignore large CSVs or raw data you don't want on GitHub)
 data/creditcard/creditcard.csv
 data/processed/
 =======
+=======
+>>>>>>> task2-model-building
 # Data files (ignore large CSVs or raw data you don't want on GitHub)
 
 data/processed/
 data/raw/creditcard.csv
+<<<<<<< HEAD
+>>>>>>> task2-model-building
+=======
 >>>>>>> task2-model-building
 data/raw/Fraud_Data.csv
 data/raw/IpAddress_to_Country.csv
@@ -42,10 +51,13 @@ data/raw/IpAddress_to_Country.csv
 *.lock
 =======
 
+<<<<<<< HEAD
 data/creditcard/
 =======
 
 
+=======
+>>>>>>> task2-model-building
 data/processed/
 data/raw/
 
