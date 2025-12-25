@@ -4,7 +4,10 @@ Simple Task 2 runner
 """
 
 import sys
-sys.path.append('src')
+from pathlib import Path
+
+PROJECT_ROOT = Path(__file__).resolve().parents[1]
+sys.path.append(str(PROJECT_ROOT / "src"))
 
 from task2_models import run_task2
 
