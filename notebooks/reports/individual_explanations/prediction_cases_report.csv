@@ -1,0 +1,2 @@
+tp_count,fp_count,fn_count,tn_count,accuracy,precision,recall,f1_score
+7600,0,6551,136961,0.9566480491291228,1.0,0.537064518408593,0.6988184451289596
