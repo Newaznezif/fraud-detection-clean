@@ -1,0 +1,14 @@
+FRAUD DETECTION MODEL EXPLAINABILITY REPORT
+==================================================
+
+Model: RandomForestClassifier
+Data samples: 151,112
+Fraud rate: 9.36%
+Accuracy: 95.66%
+
+TOP FEATURES:
+5. hours_since_signup: 0.0944
+1. purchase_value: 0.0000
+2. age: 0.0000
+3. ip_address: 0.0000
+4. purchase_hour: 0.0000
