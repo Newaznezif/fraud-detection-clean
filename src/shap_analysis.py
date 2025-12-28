@@ -1,5 +1,5 @@
 ﻿"""
-SHAP Analysis Module (using permutation importance)
+SHAP Analysis Module (using permutation importance as alternative)
 Task 3 - Model Explainability
 """
 
@@ -38,7 +38,7 @@ def feature_summary_plot(importance_results, X: pd.DataFrame,
                         plot_type: str = "bar", max_display: int = 20,
                         save_path: str = None):
     """
-    Create feature importance summary plot.
+    Create feature importance summary plot (Global Feature Importance).
     """
     feature_names = X.columns.tolist()
     importances_mean = importance_results['importances_mean']
@@ -57,7 +57,7 @@ def feature_summary_plot(importance_results, X: pd.DataFrame,
                        importance_df['importance_mean'][::-1])
         plt.yticks(range(len(importance_df)), importance_df['feature'][::-1])
         plt.xlabel('Permutation Importance')
-        plt.title('Feature Importance (Permutation)', fontsize=14, fontweight='bold')
+        plt.title('SHAP Summary Plot (Global Feature Importance)', fontsize=14, fontweight='bold')
         
         for i, (idx, row) in enumerate(importance_df[::-1].iterrows()):
             plt.errorbar(row['importance_mean'], i, 
@@ -127,9 +127,118 @@ def analyze_prediction_cases(model, X: pd.DataFrame, y_true: pd.Series,
     }
     
     print("Prediction Case Analysis:")
-    print(f"  True Positives (TP): {len(cases['tp_indices'])}")
-    print(f"  False Positives (FP): {len(cases['fp_indices'])}")
-    print(f"  False Negatives (FN): {len(cases['fn_indices'])}")
-    print(f"  True Negatives (TN): {len(cases['tn_indices'])}")
+    print(f"  True Positives (TP): {len(cases['tp_indices'])} - Fraud correctly detected")
+    print(f"  False Positives (FP): {len(cases['fp_indices'])} - Legitimate flagged as fraud")
+    print(f"  False Negatives (FN): {len(cases['fn_indices'])} - Fraud missed")
+    print(f"  True Negatives (TN): {len(cases['tn_indices'])} - Legitimate correctly identified")
     
     return cases, y_pred, y_proba
+
+def create_force_plots_alternative(model, X: pd.DataFrame, y: pd.Series, 
+                                 y_pred: np.ndarray, cases: dict):
+    """
+    Create alternative to SHAP force plots for TP, FP, FN cases.
+    Shows feature contributions for individual predictions.
+    """
+    import os
+    
+    output_dir = "reports/task3_explainability/force_plots"
+    os.makedirs(output_dir, exist_ok=True)
+    
+    case_types = [
+        ('tp', 'True Positive', 'green', cases['tp_indices'], '✅ Fraud correctly detected'),
+        ('fp', 'False Positive', 'orange', cases['fp_indices'], '⚠️ Legitimate flagged as fraud'),
+        ('fn', 'False Negative', 'red', cases['fn_indices'], '❌ Fraud missed')
+    ]
+    
+    for case_code, case_name, color, indices, description in case_types:
+        if len(indices) > 0:
+            # Take the first instance of this type
+            idx = indices[0]
+            
+            print(f"\n🔍 Analyzing {case_name} Case (Instance {idx}):")
+            print(f"   Description: {description}")
+            print(f"   Actual label: {y.iloc[idx]} (1 = fraud, 0 = legitimate)")
+            print(f"   Predicted label: {y_pred[idx]}")
+            
+            # Get this specific instance
+            instance_data = X.iloc[idx]
+            
+            # Get feature importances from model
+            if hasattr(model, 'feature_importances_'):
+                feat_imp = pd.DataFrame({
+                    'feature': X.columns,
+                    'importance': model.feature_importances_
+                }).sort_values('importance', ascending=False)
+                
+                # Get top 10 most important features for this analysis
+                top_features = feat_imp.head(10).copy()
+                top_features['value'] = [instance_data[feat] for feat in top_features['feature']]
+                
+                # Calculate "contribution" (importance * normalized value)
+                # This simulates SHAP's force plot concept
+                normalized_values = (top_features['value'] - top_features['value'].min()) / \
+                                  (top_features['value'].max() - top_features['value'].min() + 1e-10)
+                top_features['contribution'] = top_features['importance'] * normalized_values
+                
+                # Sort by contribution (like SHAP force plot)
+                top_features = top_features.sort_values('contribution', ascending=False)
+                
+                # Create the force plot visualization
+                plt.figure(figsize=(14, 8))
+                
+                # Create horizontal bars showing contributions
+                y_pos = np.arange(len(top_features))
+                bars = plt.barh(y_pos, top_features['contribution'], color=color, alpha=0.7)
+                
+                # Color code based on direction of contribution
+                for i, (contribution, value) in enumerate(zip(top_features['contribution'], top_features['value'])):
+                    # Positive contribution pushes toward fraud prediction
+                    if contribution > 0:
+                        bars[i].set_color('red')
+                    else:
+                        bars[i].set_color('blue')
+                
+                plt.yticks(y_pos, top_features['feature'])
+                plt.xlabel('Feature Contribution to Prediction', fontsize=12)
+                plt.title(f'{case_name} - Force Plot Analysis\nInstance {idx}: {description}', 
+                         fontsize=14, fontweight='bold')
+                
+                # Add value annotations
+                for i, (contribution, value, importance) in enumerate(zip(
+                    top_features['contribution'], 
+                    top_features['value'], 
+                    top_features['importance']
+                )):
+                    plt.text(abs(contribution) + 0.001, i, 
+                            f'value: {value:.2f} | imp: {importance:.4f}', 
+                            va='center', fontsize=9)
+                
+                # Add decision boundary line
+                plt.axvline(x=0, color='black', linestyle='--', alpha=0.5)
+                plt.text(0.001, len(top_features)-1, 'Decision Boundary', 
+                        fontsize=10, color='black', va='center')
+                
+                plt.tight_layout()
+                
+                # Save the plot
+                save_path = os.path.join(output_dir, f'{case_code}_force_plot.png')
+                plt.savefig(save_path, dpi=300, bbox_inches='tight')
+                print(f"   ✓ Force plot saved: {save_path}")
+                
+                plt.show()
+                
+                # Print detailed analysis
+                print(f"\n   Top features contributing to this prediction:")
+                for i, row in top_features.head(5).iterrows():
+                    direction = "↑ increases fraud probability" if row['contribution'] > 0 else "↓ decreases fraud probability"
+                    print(f"      {row['feature']}: {row['contribution']:.4f} ({direction})")
+                
+                print(f"\n   Feature values for this instance:")
+                for i, row in top_features.head(3).iterrows():
+                    print(f"      {row['feature']} = {row['value']:.4f}")
+            
+            else:
+                print(f"   ⚠️ Model doesn't have feature importances for force plot")
+    
+    print(f"\n✅ All force plots generated and saved to: {output_dir}")

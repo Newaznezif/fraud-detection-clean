@@ -1,0 +1,19 @@
+[33m5727cbd[m[33m ([m[1;36mHEAD[m[33m -> [m[1;32mtask3-explainability[m[33m, [m[1;31morigin/task3-explainability[m[33m)[m Merge branch 'task2-model-building'
+[33mb00c5b5[m[33m ([m[1;31morigin/task2-model-building[m[33m, [m[1;32mtask2-model-building[m[33m)[m Complete Task 2: Model building and training
+[33m46c142f[m Resolve merge conflict in .gitignore
+[33mbf36a5e[m Save local changes before merging task2
+[33m1091f57[m Complete Task 2: Model building and training
+[33m7386cdd[m Complete Task 2: Model building and training
+[33m247e26b[m chore: add missing ML dependencies for Task 2
+[33me9f2bbd[m Task 2: model building, evaluation, and comparison
+[33m82f0746[m merge: resolve .gitignore conflict
+[33m57c38a1[m chore: ignore Python cache files
+[33mfeedaf0[m chore: ignore python cache and temp files
+[33m10df270[m Update gitignore
+[33me7b3c2d[m[33m ([m[1;31morigin/task1-data-analysis[m[33m, [m[1;32mtask1-data-analysis[m[33m)[m Ignore large CSV file to allow push
+[33m8650f1a[m Ignore large CSV file to allow push
+[33m0e37206[m Add .gitignore to prevent tracking large files
+[33m8c11625[m Setup .gitignore and remove large/unnecessary files from tracking
+[33m825e49c[m Add source code, notebooks, scripts, requirements
+[33m9673fdb[m Initial commit: completed Task 1 EDA & Feature Engineering
+[33m6043f49[m Initial project structure, data, and setup
