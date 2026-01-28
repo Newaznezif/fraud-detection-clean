@@ -119,9 +119,3 @@ Email: newaz@example.com
 
 yaml
 Copy code
-
----
-
-If you want, I can **also create a “top-score version” README** that includes **example outputs, screenshots, and step-by-step instructions with expected results**, so it looks like a fully professional, production-ready repo.  
-
-Do you want me to do that?
